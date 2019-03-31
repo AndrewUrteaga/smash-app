@@ -25,7 +25,7 @@ UserSchema.pre('save', function(next) {
 })
 
 
-UserSchema.methods = {
+UserSchema.methods = { 
   // check the passwords on signin
   authenticate: function(plainTextPword) {
     return bcrypt.compareSync(plainTextPword, this.password);

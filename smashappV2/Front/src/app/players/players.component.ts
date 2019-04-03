@@ -6,19 +6,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
-user: any[] = [
+Users: any[] = [
   {
 "name": "Drew",
 "gamertag": "DaddyDrew",
 "picture": null,
 "main": "Ganon" ,
 "secondary": "Samus",
-"gender": "male",
+"gender": "Male",
 "wins": 4 ,
 "loses": 2,
 "winRatio": "58%",
-"username": "Daddy"
-  }
+"username": "Daddy",
+"elite": true
+  },
+  {
+    "name": "Liez",
+    "gamertag": "Doughnut",
+    "picture": null,
+    "main": "Kirby" ,
+    "secondary": "Samus",
+    "gender": "Female",
+    "wins": 4 ,
+    "loses": 2,
+    "winRatio": "2%",
+    "username": "Liezzy",
+    "elite": false
+      }
 ]
   constructor() { }
 

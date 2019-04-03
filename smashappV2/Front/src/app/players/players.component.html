@@ -1,43 +1,30 @@
 <div class="well">
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <th>
-        Rank
-        </th>
-        <th>
-        Image
-        </th>
-        <th>
-        Name
-        </th>
-        <th>
-        Tag
-        </th>
-        <th>
-        Main
-        </th>
-        <th>
-        Secondary
-        </th>
-        <th>
-        Win Ratio
-        </th>
-        <th>
-        Elite
-        </th>
+  <div>
+  <table class="table table-responsive-lg table-light table-hover">
+    <thead>
+      <th>Rank</th>
+      <th>Portrait</th>
+      <th>Name</th>
+      <th>Tag</th>
+      <th>Main</th>
+      <th>Secondary</th>
+      <th>Win Ratio</th>
+      <th>Elite</th>
     </thead>
     <tbody>
-      <td>
-        1
-      </td>
-      <td>
-        <img style="width:80px;height:80px;" src="https://ronepraisephilly.files.wordpress.com/2017/10/15076582116267.jpg">
-      </td>
-      <td>
-        {{user.name}}
-      </td>
+      <tr *ngFor='let user of Users'>
+        <td>1</td>
+        <td>
+          <img class='rounded'style="width:80px;height:80px;" src="https://ronepraisephilly.files.wordpress.com/2017/10/15076582116267.jpg">
+        </td>
+        <td>{{user.name}}</td>
+        <td>{{user.gamertag}}</td>
+        <td>{{user.main}}</td>
+        <td>{{user.secondary}}</td>
+        <td>{{user.winRatio}}</td>
+        <td> <a *ngIf='user.elite'><img style="width:40px;height:40px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcLdFVl3cWFz4zg0sogeNRumi3RDDXG864ZM2bsNvv9UAPCiG_"></a></td>
+      </tr>
     </tbody>
   </table>
-</div>
+  </div>
 </div>

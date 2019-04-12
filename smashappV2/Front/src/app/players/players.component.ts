@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayersService } from './players.service';
 
 @Component({
   selector: 'app-players',
@@ -6,37 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
-Users: any[] = [
-  {
-"name": "Drew",
-"gamertag": "DaddyDrew",
-"picture": null,
-"main": "Ganon" ,
-"secondary": "Samus",
-"gender": "Male",
-"wins": 4 ,
-"loses": 2,
-"winRatio": "58%",
-"username": "Daddy",
-"elite": true
-  },
-  {
-    "name": "Liez",
-    "gamertag": "Doughnut",
-    "picture": null,
-    "main": "Kirby" ,
-    "secondary": "Samus",
-    "gender": "Female",
-    "wins": 4 ,
-    "loses": 2,
-    "winRatio": "2%",
-    "username": "Liezzy",
-    "elite": false
-      }
-]
-  constructor() { }
+  public user$;
+
+  constructor(private playersService: PlayersService) { }
 
   ngOnInit() {
-  }
-
-}
+  this.user$ = this.playersService.getPlayers()
+}}

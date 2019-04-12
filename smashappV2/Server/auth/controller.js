@@ -8,3 +8,9 @@ exports.signin = function(req, res, next) {
 var token = signToken(req.user._id);
 res.json({token})
 };
+
+exports.register = function(req, res, next) {
+  // create user 
+  // signin 
+  sigin(req, res, next)
+}

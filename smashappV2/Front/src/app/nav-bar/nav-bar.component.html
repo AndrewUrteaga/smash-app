@@ -6,19 +6,19 @@
             <a class="nav-link" routerLink="./home" routerLinkActive= "active">Home</a>
           </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink='./users' routerLinkActive= "active">Ranking</a>
+          <a class="nav-link" routerLink='./users' routerLinkActive= "active">Smashers</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Videos</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Profile</a>
-        </li>
+          <form class="form-inline" (ngSubmit)= "searchUser(query)">
+              <input class="form-control" [(ngModel)]= "query" type="search" name="query" 
+                placeholder="Search Name" (keyup.enter)="searchUser()" aria-label="Search">
+              <button class="btn btn-outline-primary" (click)="searchUser()" type="submit" routerLink='./search'> Search </button>
+            </form>
       </ul>
-<div class="ml-auto">
-    <form class="form-inline">
-      <input class="form-control " type="search" placeholder="Search Name" aria-label="Search">
-      <button class="btn btn-outline-primary " type="submit">Search</button>
-    </form>
+<div class="navbar-nav ml-auto nav-item"> 
+  <!-- //<a *ngIf='!auth.isAuthenticated()'></a> -->
+    <a class="nav-link" routerLink='./login' routerLinkActive='active'>Login</a>    
 </div>
   </nav>

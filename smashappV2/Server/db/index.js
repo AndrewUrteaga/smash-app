@@ -12,7 +12,8 @@ var userSchema = mongoose.Schema({
   id: mongoose.Schema.Types.ObjectId,
   gamertag: {
       type: String,
-      required: true
+      required: true,
+      unique: true
   },
   picture: String,
   main: String,

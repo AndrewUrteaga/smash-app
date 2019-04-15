@@ -7,8 +7,9 @@ let apiRoutes = require('./routes/api')
 // let MongoClient = require('mongodb').MongoClient
 let cors = require('cors')
 let config = require('./config/config')
+const morgan = require('morgan')
 
-
+app.use(morgan('dev'))
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

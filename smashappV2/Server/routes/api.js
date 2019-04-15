@@ -6,6 +6,7 @@ const upload = require("../photo-upload")
 const singleUpload = upload.single('image')
 
 router.use('/users', require('../users/usersRoute'));
+router.use('/auth', require('../auth/routes'));
 
 
 router.post('/image-upload/:id', function(req, res){
@@ -22,7 +23,7 @@ router.post('/image-upload/:id', function(req, res){
     });
 });
 router.get('/photos', (req,res) =>{
-    res.send("photos will be sent here");
+    res.send('photos will be sent here');
 });
 
 

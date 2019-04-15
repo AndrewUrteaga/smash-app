@@ -1,18 +1,24 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const uri = `mongodb+srv://aurte002%40gmail.com:Hopesdie2%21@cluster0-z92ln.mongodb.net/test?retryWrites=true`;
+const Schema = mongoose.Schema;
+const uri = 'mongodb+srv://Drew:Hopesdie2@cluster0-z92ln.mongodb.net/Smash?retryWrites=true';
 
-mongoose.connect(uri, () => {console.log("Database connection established!")})
+mongoose.Promise = global.Promise;
+mongoose.connect(uri, {useNewUrlParser:true })
+    .then(() => {
+        console.log("Database connection established!")})
+    .catch( err => {console.log(err)})
 
-var userSchema = mongoose.Schema({
+
+var userSchema = new Schema({
   name: {
       type: String,
       required: true
   },
-  id: mongoose.Schema.Types.ObjectId,
+  //id: mongoose.Schema.Types.ObjectId,
   gamertag: {
       type: String,
-      required: true,
+
       unique: true
   },
   picture: String,
@@ -24,12 +30,12 @@ var userSchema = mongoose.Schema({
   winRatio: Number,
   username: {
       type: String,
-      required: true,
+    
       unique: true    
   },
   password: {
       type: String,
-      required: true
+      
   }
 });
 
@@ -54,7 +60,6 @@ userSchema.methods = {
 };
 
 // .catch(err => console.log("Error connecting Database instance due to: ", err))
-const Users = mongoose.model("users", userSchema)
+module.exports = mongoose.model('users', userSchema)
 // perform actions on the collection object
 
-module.exports = Users;

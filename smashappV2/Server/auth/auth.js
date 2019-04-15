@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 var config = require('../config/config');
 var checkToken = expressJwt({ secret: config.secrets.jwt });
-var User = require('../users/usersModel');
+var User = require("../db/index");
 
 
 exports.decodeToken = function() {
@@ -75,6 +75,7 @@ exports.signToken = function(id) {
   return jwt.sign(
     {_id: id},
     config.secrets.jwt,
-    {expiresInMinutes: config.expireTime}
+    {expiresIn: config.expireTime}
+    //in Minutes
   );
 };

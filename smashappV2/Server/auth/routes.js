@@ -1,11 +1,12 @@
-var router = require('express').Router();
-var controller = require('./controller');
-var verifyUser = require('./auth').verifyUser
+let router = require('express').Router();
+let controller = require('./controller');
+let verifyUser = require('./auth').verifyUser
 
 
-// before we send back a jwt, lets check
+
+// check
 // the password and username match what is in the DB
-router.post('/signin', verifyUser, controller.signin);
-router.post('/register')
+router.post('/signin', verifyUser(), controller.signin);
+router.post('/register', controller.createNewUser);
 
 module.exports = router;

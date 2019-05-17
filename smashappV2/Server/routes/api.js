@@ -9,11 +9,11 @@ router.use('/users', require('../users/usersRoute'));
 router.use('/auth', require('../auth/routes'));
 
 
-router.post('/image-upload/:id', function(req, res){
+router.post('/image-upload', function(req, res){
     singleUpload(req, res, function(err){
         // 1. create a unique file name file_id 
         // 2. Save to S3 
-        // 3. Save image ur to mongo for User with 'id'
+        // 3. Save image url to mongo for User with 'id'
         // 4. return url image 
 
         if (err){
@@ -22,9 +22,7 @@ router.post('/image-upload/:id', function(req, res){
         return res.json({'imageUrl': req.file.location});
     });
 });
-router.get('/photos', (req,res) =>{
-    res.send('photos will be sent here');
-});
+
 
 
 

@@ -4,7 +4,8 @@
   "description": "Smash Tracker",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon index.js --proxy-config proxy.conf.json",
+    "production": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Drew",

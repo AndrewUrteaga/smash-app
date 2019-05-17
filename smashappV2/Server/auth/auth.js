@@ -9,14 +9,15 @@ exports.decodeToken = function() {
   return function(req, res, next) {
     // follow the 'Bearer 034930493' format
     // so checkToken can see it and decode it
-    if (req.query && req.query.hasOwnProperty('access_token')) {
-      req.headers.authorization = 'Bearer ' + req.query.access_token;
-    }
+    if (req.headers.authorization) {
+    //   req.headers.authorization = 'Bearer ' + req.body.token;
+    // }
 
     // this will call next if token is valid
-    // and send error if its not. It will attached
+    // and send error if its not. It will attach
     // the decoded token to req.user
     checkToken(req, res, next);
+    } 
   };
 };
 
@@ -58,6 +59,9 @@ exports.verifyUser = function() {
         } else {
           if (!user.authenticate(password)) {
             res.status(401).send('Wrong password!')
+          } else {
+            req.user = user
+            next()
           }
         }
       })
@@ -71,9 +75,10 @@ exports.verifyUser = function() {
 };
 
 // util method to sign tokens on signup
-exports.signToken = function(id) {
+exports.signToken = function(id, username) {
   return jwt.sign(
-    {_id: id},
+    {_id: id,
+     username:username},
     config.secrets.jwt,
     {expiresIn: config.expireTime}
     //in Minutes

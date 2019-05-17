@@ -17,7 +17,7 @@ exports.params = function(req, res, next, id){
     };
 
 exports.getAllUsers = function(req, res, next){
-    Users.find({})
+    Users.find({}).sort({ranking:-1})
         .then(function(users){
             res.json(users);
         }, function (err) {
@@ -34,6 +34,8 @@ exports.updateUser = function(req, res, next) {
     let user = req.user; // old
     let update = req.body; // new
     // Does this make sense?
+    
+
     user = Object.assign(user,update)
     
     user.save(function(err, saved) {
@@ -44,16 +46,6 @@ exports.updateUser = function(req, res, next) {
         }
     })
 };
-
-// exports.createNewUser = function(req, res, next) {
-//         Users.create(req.body)
-//         .then(user => {
-//             var token = signToken(user.id);
-//             res.json({token: token})
-
-//         }, err => {next(err)}
-//         )
-//     }
        
 exports.delete = function(req, res, next) {
     req.user.remove(function(err, removed) {

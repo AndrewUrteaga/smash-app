@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
-const uri = 'mongodb+srv://Drew:Hopesdie2@cluster0-z92ln.mongodb.net/Smash?retryWrites=true';
+// const uri = 'mongodb://localhost/smash';
+const config = require('../config/config')
 
+//mongodb+srv://Drew:Hopesdie2@cluster0-z92ln.mongodb.net/Smash?retryWrites=true
 mongoose.Promise = global.Promise;
-mongoose.connect(uri, {useNewUrlParser:true })
+mongoose.connect(config.db.url , {useNewUrlParser:true })
     .then(() => {
         console.log("Database connection established!")})
     .catch( err => {console.log(err)})
@@ -13,29 +15,22 @@ mongoose.connect(uri, {useNewUrlParser:true })
 var userSchema = new Schema({
   name: {
       type: String,
-      required: true
   },
-  //id: mongoose.Schema.Types.ObjectId,
-  gamertag: {
-      type: String,
-
-      unique: true
-  },
-  picture: String,
+  picture: {type:String, default: "https://smashbucket123.s3.amazonaws.com/1557787837407"},
   main: String,
   secondary: String,
   gender: String,
-  wins: Number,
-  loses: Number,
-  winRatio: Number,
+  wins: {type: Number, default: 0},
+  losses:  {type: Number, default: 0},
+  winRatio: {type: Number, default: 0},
   username: {
       type: String,
-    
       unique: true    
   },
+  elite: Boolean,
   password: {
       type: String,
-      
+      required: true
   }
 });
 

@@ -11,15 +11,15 @@
         <th>Elite</th>
       </thead>
       <tbody>
-        <tr *ngFor='let user of searchResults$ | async' class='clickable-row' [routerLink]= "['/users', user.id]">
+        <tr *ngFor='let user of searchResults$ | async' class='clickable-row' [routerLink]= "['/users', user._id]">
           <td>1</td>
           <td>
-            <img class='rounded'style="width:80px;height:80px;" src="https://ronepraisephilly.files.wordpress.com/2017/10/15076582116267.jpg">
+            <img class='rounded'style="width:80px;height:80px;" src="{{user.picture}}">
           </td>
-          <td>{{user.gamertag}}</td>
+          <td>{{user.username}}</td>
           <td>{{user.main}}</td>
           <td>{{user.secondary}}</td>
-          <td>{{user.winRatio}}</td>
+          <td>{{ (user.wins)/(user.wins+user.losses) | number : '1.2-2'}}</td>
           <td> <a *ngIf='user.elite'><img style="width:40px;height:40px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcLdFVl3cWFz4zg0sogeNRumi3RDDXG864ZM2bsNvv9UAPCiG_"></a></td>
         </tr>
       </tbody>

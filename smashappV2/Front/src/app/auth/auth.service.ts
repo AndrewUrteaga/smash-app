@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt' 
-import { CanActivate } from '@angular/router/src/utils/preactivation';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
+import { error } from '@angular/compiler/src/util';
 
 
 
@@ -12,28 +12,44 @@ import { of } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  currentUser;
 
-  constructor(private JwtHelper: JwtHelperService,
-              private http:HttpClient,
-              private router:Router) {}
-  
-  loginUser(userName:string, password:string){
+  isLoggedIn$ = new BehaviorSubject<boolean>(false);
+
+  setLoggedIn(value: boolean) {
+    console.log('set logged in ', value);
+    this.isLoggedIn$.next(value)
+  }
+
+  private userSubject = new BehaviorSubject<Object>({ name: '' })
+  userSubject$ = this.userSubject.asObservable();
+
+  setUserSubject(currentUser) {
+    this.userSubject.next(currentUser)
+  }
+
+  constructor(public JwtHelper: JwtHelperService,
+    public http: HttpClient,
+    public router: Router) { }
+
+  loginUser(userName: string, password: string) {
 
     let loginInfo = { username: userName, password: password };
-    let options = { headers: new HttpHeaders( {'Content-Type' : 'application/json'})};
-    
-    return this.http.post('/signin', loginInfo, options)
-      .pipe(tap((data) => {
-        this.currentUser = data
+    let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+    return this.http.post('http://localhost:3000/api/auth/signin', loginInfo, options)
+      .pipe(tap(data => {
+
+        this.setUserSubject(data)
+        localStorage.setItem('token', data['token']);
+        this.setLoggedIn(true);
       }))
-      .pipe(catchError( err => {
+      .pipe(catchError(() => {
         return of(false)
       }))
   }
 
-  isTokenValid(): boolean {
-    const token = localStorage.getItem('token');
+  isTokenBad(): boolean {
+    let token = localStorage.getItem('token');
     return this.JwtHelper.isTokenExpired(token);
   }
 
@@ -41,22 +57,67 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
-  logout(): void {
-    window.localStorage.removeItem('token')
+  getToken(): string {
+    return localStorage.getItem('token')
+  }
+
+  logoutUser(): void {
+    window.localStorage.removeItem('token');
+    this.setUserSubject(null)
+    this.setLoggedIn(false);
   }
 
   isAuthenticated() {
-    return false
+    const user = this.userSubject.getValue();
+    
+    if (user == null) {
+      console.log("Not logged in");
+      this.setLoggedIn(false);
+      return false;
+    } else {
+      console.log("logged in");
+      this.setLoggedIn(true);
+      return true;
+    }
+  }
+
+  checkAuthenticationStatus() {
+    return this.http.get('http://localhost:3000/api/auth/checkuser')
+      .pipe(
+        tap(data => {
+          if (data instanceof Object) {
+            this.setUserSubject(data)
+            this.isAuthenticated();
+            console.log(data)
+          } else return
+        })
+      )
+  }
+
+  registerUser(formData) {
+
+    let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+    return this.http.post('http://localhost:3000/api/auth/register', formData, options)
+      .pipe(tap(data => {
+        this.setUserSubject(data)
+        localStorage.setItem('token', data['token']);
+        console.log(data);
+        this.setLoggedIn(true);       
+      }))
+      .pipe(catchError(() => {
+        return of(false)
+      }))
+  }
+
+  editUser(formData, id){
+    let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.http.put('http://localhost:3000/api/users/'+ id, formData, options)
+      .pipe(tap(data => {
+        this.setUserSubject(data)
+        console.log(data);
+        this.setLoggedIn(true);
+      }), catchError( val => of(val))
+      )
   }
 }
- 
-// export class AuthGuard {
-//   constructor(private authService: AuthService) {}
-//   canActivate() {
-//     if (this.authService.isTokenValid) {
-//       return true;
-//     }
-    
-//     // nav to login 
-//   }
-// }

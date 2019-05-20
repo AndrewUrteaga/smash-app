@@ -1,14 +1,15 @@
 export interface IPlayers {
 
+_id: string    
 name: string;
-gamertag: string;
-picture: URL;
+picture: string;
 main: string;
 secondary: string;
 gender: string;
 wins: number;
-loses: number;
+losses: number;
 winRatio: number;
 username: string;
 elite: boolean;
+
 }

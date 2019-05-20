@@ -4,17 +4,20 @@ import { PlayersComponent } from './players/players.component';
 import { HomeComponent } from './home/home.component';
 import { PlayersDetailsComponent } from './players/players-details/players-details.component';
 import { PlayersDetailsGuard } from './players/players-details/players-details.guard';
-// import { AuthGuard } from './auth/auth.service';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
+import { ProfileComponent } from './players/profile/profile.component';
+import { RegisterComponent } from './login/register.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {path: 'home' , component: HomeComponent},
-  // , canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'users', component: PlayersComponent},
   {path: 'search', component: SearchComponent},
-  {path: 'users/:id', canActivate: [PlayersDetailsGuard] ,component: PlayersDetailsComponent}, 
+  {path: 'register', component: RegisterComponent},
+  {path: 'profile', canActivate: [AuthGuard], component: ProfileComponent},
+  {path: 'users/:id', canActivate: [AuthGuard], component: PlayersDetailsComponent}, 
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];

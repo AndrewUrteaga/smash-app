@@ -1,7 +1,9 @@
 var config = {
     dev: "development",
     prod: "production",
-
+    db: {
+        url: "mongodb+srv://Drew:Hopesdie2@cluster0-z92ln.mongodb.net/test?retryWrites=true"
+    },
 
     port: process.env.PORT || 3000,
     secrets: {

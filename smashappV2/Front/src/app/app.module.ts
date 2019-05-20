@@ -12,7 +12,16 @@ import { HomeComponent } from './home/home.component';
 import { PlayersDetailsComponent } from './players/players-details/players-details.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
+import { ProfileComponent } from './players/profile/profile.component';
+import {  JwtModule } from '@auth0/angular-jwt';
+import { RegisterComponent } from './login/register.component';
+import { CommonModule } from '@angular/common';
 
+
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -23,14 +32,24 @@ import { SearchComponent } from './search/search.component';
     PlayersDetailsComponent,
     LoginComponent,
     SearchComponent,
+    ProfileComponent,
+    RegisterComponent,
     
   ],
   imports: [
+    CommonModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,
     EmbedVideo.forRoot(),
     HttpClientModule,
+    FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3000']
+      }
+      })
   ],
   providers: [],
   bootstrap: [AppComponent]

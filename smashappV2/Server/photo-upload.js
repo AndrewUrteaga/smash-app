@@ -3,12 +3,7 @@ const multerS3 = require("multer-s3");
 const aws = require("aws-sdk");
 const config = require("../Server/config/config")
 
-aws.config.update({
 
-    secretAccessKey: config.AWS_Secret,
-    accessKeyId: config.AWS_Key,
-    region: "us-east-1"
-});
 
 const s3 = new aws.S3();
   

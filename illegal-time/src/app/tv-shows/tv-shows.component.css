@@ -1,0 +1,12 @@
+.card-columns {
+      column-count: 8;
+  }
+  background-image {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+.card {
+    min-height: 250px;
+    max-height: 250px;
+}
+  
